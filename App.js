@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Livros from "./pages/Livros";
 import AdicionarLivro from "./pages/AdicionarLivro";
 import Favoritos from "./pages/Favoritos";
+import SplashScreen from "./pages/SplashScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -86,6 +87,36 @@ export default function App() {
       autor: "Beth O'Leary",
       imagem: "",
     },
+    {
+      id: "5",
+      nome: "A Filha das Profundezas",
+      autor: "Rick Riordan",
+      imagem: require("./assets/livros/afdp.jpg"),
+    },
+    {
+      id: "6",
+      nome: "Trono de Vidro",
+      autor: "Sarah J. Maas",
+      imagem: "",
+    },
+    {
+      id: "7",
+      nome: "Quem é você, Alasca?",
+      autor: "John Green",
+      imagem: require("./assets/livros/alaska.jpg"),
+    },
+    {
+      id: "8",
+      nome: "Jantar Secreto",
+      autor: "Raphael Montes",
+      imagem: require("./assets/livros/jantarsecreto.jpg"),
+    },
+    {
+      id: "9",
+      nome: "O Ladrão de Raios",
+      autor: "Rick Riordan",
+      imagem: require("./assets/livros/ladraoraios.jpg"),
+    },
   ]);
 
   const [favoritos, setFavoritos] = useState([]);
@@ -93,8 +124,12 @@ export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          {/* ✅ Aqui usamos apenas children, sem component */}
+        <Stack.Navigator initialRouteName="Splash">
+          <Stack.Screen
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Tabs"
             options={{

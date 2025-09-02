@@ -5,6 +5,15 @@ import { Button, Card, IconButton, Text } from "react-native-paper";
 
 export default function Livros({ navigation, livros, setLivros, favoritos, setFavoritos }) {
 
+const [pagina, setPagina] = useState(1);
+  const itensPorPagina = 6;
+
+  const totalPaginas = Math.ceil(livros.length / itensPorPagina);
+  const livrosPaginados = livros.slice(
+    (pagina - 1) * itensPorPagina,
+    pagina * itensPorPagina
+  );
+
   const excluirLivro = (id) => {
     Alert.alert("Confirmar exclusão", "Deseja realmente excluir este livro?", [
       { text: "Cancelar", style: "cancel" },
@@ -29,7 +38,7 @@ export default function Livros({ navigation, livros, setLivros, favoritos, setFa
       <Text style={styles.title}>📖 Livros</Text>
 
       <FlatList
-        data={livros}
+        data={livrosPaginados}
         keyExtractor={(item) => item.id}
         numColumns={2} // 👉 dois livros por linha
         columnWrapperStyle={{ justifyContent: "space-between" }}
@@ -77,6 +86,29 @@ export default function Livros({ navigation, livros, setLivros, favoritos, setFa
             </View>
           </Card>
         )}
+        ListFooterComponent={
+          <View style={styles.pagination}>
+            <Button
+              icon="chevron-left"
+              disabled={pagina === 1}
+              onPress={() => setPagina(pagina - 1)}
+              style={styles.pageBtn}
+              labelStyle={{ color: "#8b49b7ff", fontSize: 30, fontWeight: "bold" }}
+            >
+            </Button>
+            <Button
+              icon="chevron-right"
+              disabled={pagina === totalPaginas || totalPaginas === 0}
+              onPress={() => setPagina(pagina + 1)}
+              style={styles.pageBtn}
+              labelStyle={{ color: "#8b49b7ff", fontSize: 30, fontWeight: "bold" }}
+            >
+            </Button>
+            <Text style={{ color: "#8b49b7ff", marginHorizontal: 10, textAlign: "center" }}>
+              Página {pagina} de {totalPaginas}
+            </Text>
+          </View>
+        }
       />
 
       <Button
@@ -146,5 +178,11 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#8b49b7ff",
     marginTop: 10,
+  },
+  pagination: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 10,
   },
 });
